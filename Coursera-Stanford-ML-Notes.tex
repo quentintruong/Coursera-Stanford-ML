@@ -1,0 +1,179 @@
+\documentclass[11pt, oneside]{article}  
+\usepackage{amsmath, amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[ampersand]{easylist}
+\usepackage{subcaption}
+\usepackage{csquotes}
+
+\title{Coursera-Stanford-ML-Notes}
+\author{Quentin Truong}
+\date{20 June 2017 - ? July 2017}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+\pagenumbering{arabic}
+\newpage
+
+
+\section{Week 1: Introduction}
+\subsection{Overview}
+	\begin{easylist}  
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Machine Learning: \hyphenquote{}{A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E.}
+		\\& Supervised Learning: know what our correct output looks like
+		&& Regression: want continuous output
+		&& Classification: want discrete output
+		\\& Unsupervised Learning: little or no idea what our results should look like
+		&& Clustering: find groups according to similarity in various variables 
+		&& Nonclustering: find structure in chaos
+	\end{easylist}
+\newpage
+
+
+\section{Week 2: Linear Regression with Multiple Variables}
+\subsection{Overview}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Use linear regression for continuous output
+		\\& Choose gradient descent if many features (million+) because the inverse matrix required for the normal equation can become expensive to compute
+		\\& Normal equation will directly compute theta
+		\\& Normalize features if using gradient descent
+	\end{easylist}
+\subsection{Symbols}
+	\begin{align*}
+		m &= number\ of\ samples\\
+		n &= number\ of\ feature\\
+		x &= (n \times 1)\\
+		X &= (m \times n)\\
+		X_j &= (m \times 1)\\
+		\theta &= (n \times 1)\\
+		\theta_j &= (1 \times 1)
+	\end{align*}
+\subsection{Gradient Descent}
+	\begin{align*}
+		\text{Hypothesis Function} && 
+			h_\theta(x) &= \theta^\intercal \times x\\
+		\text{Vectorized Hypothesis Function} && 
+			h_\theta(X) &= X \cdot \theta \\
+		\text{Linear Regression Cost Function} && 
+			J(\theta) &= \frac{1}{2 m} \sum (h_\theta(X) - y)^2 \\
+		\text{Derivative of Linear Regression CF wrt $\theta_j$} && 
+			\frac{\partial}{\partial \theta_j} J(\theta) &= \frac{1}{m} \sum (h_\theta(X) - y)\ .* X_j \\
+		\text{Change in $\theta_j$} &&
+			\theta_j &= \theta_j - \alpha \frac{\partial}{\partial \theta_j} \\
+		\text{} &&
+			&= \theta_j - \alpha \frac{1}{m} \sum (h_\theta(X) - y)\ .* X_j \\
+		\text{Vectorized Change in $\theta$} &&
+			\theta &= \theta - \alpha \frac{1}{m} X^\intercal (X \cdot \theta - y) 
+	\end{align*}
+\subsection{Normal Equation}
+	\begin{align*}
+		\theta &= (X^\intercal \cdot X)^\text{-1} \cdot X^\intercal \cdot y
+	\end{align*}
+\newpage
+
+
+\section{Week 3: Logistic Regression}
+\subsection{Overview}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Use logistic regression for discrete output (classification)
+		&& $h_\theta(x)=(y=1|x;\theta)$; gives probability that the output is 1
+		&& For multi-class classification, use one-vs-all
+		&& Sigmoid/Logistic function maps any real number to (0, 1)
+		&& Pick class i that maximizes $h^i_\theta(x)$
+		\\& Overfitting is when learned hypothesis fits training data well but fails to generalize
+		&& Underfitting is when doesn't fit training data
+		\\& Address overfitting by reducing number of features, model selection, and regularization
+		&& Regularization results in simpler hypothesis and less overfitting
+		&& Extremely large $\lambda$ will result in underfitting and gradient descent will fail to converge
+		\\& Use other prewritten optimization algorithims (conjugate gradient, BFGS, L-BFGS) because they are faster
+	\end{easylist}
+\subsection{Logistic Regression Hypothesis Function}
+	\begin{align*}
+		\text{Sigmoid/Logistic\ Function} && 
+			g(z) &= \frac{1}{1+e^{-z}} \\
+		\text{Hypothesis\ Function} && 
+			h_\theta(x) &= g(\theta^\intercal x) \\
+		\text{} && 
+			&= \frac{1}{1+e^{-\theta^\intercal x}} 
+	\end{align*}
+\subsection{Logistic Regression Cost Function}
+	\begin{align*}
+		Cost(h_\theta(x), y) &= 
+			\begin{cases} 
+				-\log(h_\theta(x)) \text{ if y = 1 } \\
+				-\log(1 - h_\theta(x)) \text{ if y = 0}
+			\end{cases}\\
+		&= -y\log(h_\theta(x)) - (1-y)\log(1 - h_\theta(x)) \\
+		J(\theta) &= \frac{1}{m} \sum^m_{i=1}\text{Cost}(h_\theta(x^i),y^i) \\
+		J(\theta) &= \frac{-1}{m} \sum^m_{i=1} \left[y^i\log(h_\theta(x^i)) + (1-y^i)\log(1 - h_\theta(x^i))\right] 
+	\end{align*}
+\subsection{Proof of Logistic Regression Cost Function Derivative}
+	\begin{align*}
+		J(\theta) &= \frac{-1}{m} \sum^m_{i=1} [y^i\log(h_\theta(x^i)) + (1-y^i)\log(1 - h_\theta(x^i))] \\
+		\log(h_\theta(x^i)) &= \log(\frac{1}{1+e^{-\theta x^i}}) = -\log(1+e^{-\theta x^i})\\
+		\log(1 - h_\theta(x^i)) &= \log(1-\frac{1}{1+e^{-\theta x^i}})=\log(e^{-\theta x^i})-\log(1+e^{-\theta x^i})=-\theta x^i-\log(1+e^{-\theta x^i})\\
+		J(\theta) &= -\frac{1}{m}\sum_{i=1}^m \left[-y^i(\log(1+e^{-\theta x^i})) + (1-y^i)(-\theta x^i-\log(1+e^{-\theta x^i}))\right]\\
+		&= -\frac{1}{m}\sum_{i=1}^m \left[y^i\theta x^i - \theta x^i - \log(1+e^{-\theta x^i})\right]\\
+		&= -\frac{1}{m}\sum_{i=1}^m \left[y^i\theta x^i -\log(e^{\theta x^i}) - \log(1 + e^{-\theta x^i})\right]\\
+		&=-\frac{1}{m}\sum_{i=1}^m \left[y^i\theta x^i - \log(1+e^{\theta x^i})\right]\\
+		\frac{\partial}{\partial \theta_j}y^i\theta x^i &= y^i x^i_j\\
+		\frac{\partial}{\partial \theta_j}\log(1+e^{\theta x^i}) &= \frac{x^i_je^{\theta x^i}}{1+e^{\theta x^i}}\\
+		&= \frac{{x^i_j}}{{1+e^{-\theta x^i}}}\\
+		&= x^i_jh_\theta(x^i)\\
+		\frac{\partial}{\partial \theta_j}J(\theta) &= -\frac{1}{m}\sum_{i=1}^m \left[y^i x^i_j - x^i_jh_\theta(x^i)\right]\\
+		\frac{\partial}{\partial \theta_j}J(\theta) &= \frac{1}{m}\sum_{i=1}^m \left[h_\theta(x^i) - y^i\right]x^i_j
+	\end{align*}
+\subsection{Regularization}
+	\begin{align*}
+		\text{Regularizing Term} &&
+			& \lambda \sum_{j=1}^n \theta_j^2\\
+		\text{Regularized Linear Regression CF} &&
+			J(\theta) &= \frac{1}{2 m} \sum_{i=1}^m (h_\theta(x^i) - y^i)^2 + \lambda \sum_{j=1}^n \theta_j^2\\
+		\text{Regularized Logistic Regression CF} &&
+			J(\theta) &= \frac{-1}{m} \sum^m_{i=1} \left[y^i\log(h_\theta(x^i)) + (1-y^i)\log(1 - h_\theta(x^i))\right] + \frac{\lambda}{2m} \sum_{j=1}^n \theta_j^2\\
+		\text{Regularized GD (Lin/Log Regression)} &&
+			& \begin{cases} 
+				\theta_0 = \theta_j - \alpha \left[\frac{1}{m}\sum_{i=1}^m (h_\theta(x^i) - y^i)x_0^i\right]\\
+				\theta_j = \theta_j - \alpha \left[\frac{1}{m}\sum_{i=1}^m (h_\theta(x^i) - y^i)x_j^i + \frac{\lambda}{m}\theta_j\right] \text{(j=1,2,...,n)}
+			\end{cases}\\
+		\text{Regularized Normal Equation} &&
+			\theta &= (X^\intercal X + \lambda 
+			\begin{bmatrix} 
+				0 & 0 & \cdots & 0 \\
+  				0 & 1 & \cdots & 0 \\
+				\vdots  & \vdots  & \ddots & \vdots  \\
+				0 & 0 & \cdots & 1 
+			\end{bmatrix}_{n+1,n+1}
+			)^{-1} X^\intercal y
+	\end{align*}	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}  

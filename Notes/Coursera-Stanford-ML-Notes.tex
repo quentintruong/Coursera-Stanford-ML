@@ -89,6 +89,7 @@
 		\\& Address overfitting by reducing number of features, model selection, and regularization
 		&& Regularization results in simpler hypothesis and less overfitting
 		&& Extremely large $\lambda$ will result in underfitting and gradient descent will fail to converge
+		&& Do not regularize $\lambda_0$
 		\\& Use other prewritten optimization algorithims (conjugate gradient, BFGS, L-BFGS) because they are faster
 	\end{easylist}
 \subsection{Logistic Regression Hypothesis Function}
@@ -149,12 +150,60 @@
 				0 & 0 & \cdots & 1 
 			\end{bmatrix}_{n+1,n+1}
 			)^{-1} X^\intercal y
-	\end{align*}	
+	\end{align*}
+\newpage
 
 
-
-
-
+\section{Week 4: Artificial Neural Networks}
+\subsection{Overview}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Non linear classification of problems with many features
+		&& Necessary b/c 100 features at 3rd level polynomials generates 170k features; infeasible to deal with
+		&& \hyphenquote{}{One learning algorithm} hypothesis
+	\end{easylist}
+\subsection{Structure and symbols}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Three Layer System
+		&& Layer 1: Input nodes
+		&& Layer 2: Hidden/intermediate layer
+		&& Layer 3: Output layer
+	\end{easylist}
+	\begin{equation}
+		\begin{bmatrix} 
+			x_0 \\
+			x_1 \\
+			x_2 \\
+			x_3 \\
+		\end{bmatrix}
+		\rightarrow
+		\begin{bmatrix} 
+			a_1^2 \\
+			a_2^2 \\
+			a_3^2 \\
+		\end{bmatrix}
+		\rightarrow
+		h_\Theta(x)
+	\end{equation}
+	\begin{align*}
+		a_1^2 &= g(\Theta_{10}^1 x_0 + \Theta_{11}^1 x_1 + \Theta_{12}^1 x_2 + \Theta_{13}^1 x_3) \\
+		a_2^2 &= g(\Theta_{20}^1 x_0 + \Theta_{21}^1 x_1 + \Theta_{22}^1 x_2 + \Theta_{23}^1 x_3) \\
+		a_3^2 &= g(\Theta_{30}^1 x_0 + \Theta_{31}^1 x_1 + \Theta_{32}^1 x_2 + \Theta_{33}^1 x_3) \\
+		h_\Theta(x) &= a_1^3 \\
+		&= g(\Theta_{10}^2 a_0^2 + \Theta_{11}^2 a_1^2 + \Theta_{12}^2 a_2^2 + \Theta_{13}^2 a_3^2)
+	\end{align*}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Symbols
+		&& $a_i^j$: \hyphenquote{}{activation} of unit i in layer j
+		&& $\Theta^j$: matrix of weights controlling function mapping from layer j to layer j+1; each layer gets own $\Theta^j$
+		\\& General System
+		&& If network has $s_j$ units in layer $j$ and $s_{j+1}$ units in layer $j+1$, then $\Theta^j$ will be of dimension $s_{j+1} \times s_{j+1}$
+		&&& The +1 comes from the addition in $\Theta^j$ of the bias node, $x_0$ and $\Theta_0^j$
+		&& Can have multiple hidden layers
+		&& Can have multiple outputs (one-vs-all for multi-class classification)
+	\end{easylist}
 
 
 

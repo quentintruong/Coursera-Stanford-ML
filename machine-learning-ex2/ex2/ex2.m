@@ -33,13 +33,19 @@ X = data(:, [1, 2]); y = data(:, 3);
 fprintf(['Plotting data with + indicating (y = 1) examples and o ' ...
          'indicating (y = 0) examples.\n']);
 
-plotData(X, y);
+% Find Indices of Positive and Negative Examples
+pos = find(y==1); neg = find(y == 0);
+
+% Plot Examples
+plot(X(pos, 1), X(pos, 2), 'k+','LineWidth', 3, 'MarkerSize', 7); hold on;
+plot(X(neg, 1), X(neg, 2), 'ko', 'MarkerFaceColor', 'y', 'MarkerSize', 7);
 
 % Put some labels 
 hold on;
 % Labels and Legend
 xlabel('Exam 1 score')
 ylabel('Exam 2 score')
+
 
 % Specified in plot order
 legend('Admitted', 'Not admitted')

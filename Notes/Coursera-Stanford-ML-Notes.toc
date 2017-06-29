@@ -11,3 +11,6 @@
 \contentsline {subsection}{\numberline {3.3}Logistic Regression Cost Function}{4}
 \contentsline {subsection}{\numberline {3.4}Proof of Logistic Regression Cost Function Derivative}{5}
 \contentsline {subsection}{\numberline {3.5}Regularization}{5}
+\contentsline {section}{\numberline {4}Week 4: Artificial Neural Networks}{6}
+\contentsline {subsection}{\numberline {4.1}Overview}{6}
+\contentsline {subsection}{\numberline {4.2}Structure and symbols}{6}

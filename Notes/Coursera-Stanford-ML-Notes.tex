@@ -56,7 +56,7 @@
 		& Normalize features if using gradient descent
 	\end{easylist}
 
-\subsection{Symbols}
+\subsection{Notation}
 	\begin{align*}
 		m &= number\ of\ samples\\
 		n &= number\ of\ feature\\
@@ -104,10 +104,10 @@
 		& Use logistic regression for discrete output (classification)
 		&& $h_\theta(x)=(y=1|x;\theta)$; gives probability that the output is 1 given $x$
 		&& Sigmoid/Logistic function maps any real number to (0, 1)
-		&& For multi-class classification, use one-vs-all
+		&& Logarithm turns sum into product, allowing easier differentiation without altering search space
+		& For multi-class classification, use one-vs-all
 		&& Pick class i that maximizes $h^i_\theta(x)$
-		& Overfitting is when learned hypothesis fits training data well but fails to generalize
-		&& Underfitting is when doesn't fit training data
+		& Overfitting is when learned hypothesis fits training data well but fails to generalize; underfitting is when doesn't fit training data
 		& Address overfitting by reducing number of features, model selection, and regularization
 		&& Regularization results in simpler hypothesis and less overfitting
 		&& Extremely large $\lambda$ will result in underfitting and gradient descent will fail to converge
@@ -236,28 +236,25 @@
 		& Neural networks allow for non-linear classification in situations with many features
 		&& Necessary b/c 100 features at 3rd level polynomials generates 170k features, which quickly becomes intractable
 		&& \hyphenquote{}{One learning algorithm} hypothesis; you can see with your tongue : brain learns using one algorithm, not thousands of different programs
-		& General
-		&& If network has $s_j$ units in layer $j$ and $s_{j+1}$ units in layer $j+1$, then $\Theta^j$ will be of dimension $s_{j+1} \times s_j+1$
-		&&& The +1 comes from the addition in $\Theta^{(j)}$ of the bias node, $x_0$ and $\Theta_0^{(j)}$
 		&& Can have multiple hidden layers
 		&& Can have multiple outputs (one-vs-all for multi-class classification)
-		&& If three layers:
-		&&& Layer 1: Input nodes
-		&&& Layer 2: Hidden/intermediate layer
-		&&& Layer 3: Output layer
+		&& If network has $s_j$ units in layer $j$ and $s_{j+1}$ units in layer $j+1$, then $\Theta^j$ will be of dimension $s_{j+1} \times s_j+1$
+		&&& The +1 comes from the addition in $\Theta^{(j)}$ of the bias node, $x_0$ and $\Theta_0^{(j)}$
 		& Forward Propogation is used to predict based on learned parameters
 		& Bias node gives each node a trainable constant value
 		&& Allows bias weight to shift the activation curve left/right
 		&& Other weights affect steepness
 	\end{easylist}
 
-\subsection{Symbols}
+\subsection{Notation}
 	\begin{easylist} 
 	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
 		& $g(x)$: sigmoid function
-		& $a_i^{(j)}$: \hyphenquote{}{activation} of unit i in layer j
 		& $\Theta^{(j)}$: matrix of weights controlling function mapping from layer j to layer j+1; each layer gets own $\Theta^j$
-		& $z_k^{(j)}$: encompasses parameters inside of g function (from above)
+		& $\Theta_{j,0}, ..., \Theta_{j,n}$ weights corresponding to the inputs $a_0, ..., a_n$ going into $z_j$
+		& $w_{0,j}, ..., w_{n,j}$ weights corresponding to the inputs $a_0, ..., a_n$ going into $z_j$
+		& $z_k^{(j)}$: encompasses parameters inside of g function
+		& $a_i^{(j)}$: \hyphenquote{}{activation} of unit i in layer j
 	\end{easylist}
 
 \subsection{Equations}
@@ -269,92 +266,92 @@
 	\end{align*}
 
 \subsection{Sample Three Layer System}
-\begin{figure}[!h]
-    \centering
-    \begin{minipage}{.5\textwidth}
-    	\centering
-        \begin{equation*}
-			\begin{bmatrix} 
-				x_0 \\
-				x_1 \\
-				x_2 \\
-				x_3 \\
-			\end{bmatrix}
-			\rightarrow
-			\begin{bmatrix} 
-				a_1^{(2)} \\
-				a_2^{(2)} \\
-				a_3^{(2)} \\
-			\end{bmatrix}
-			\rightarrow
-			h_\Theta(x)
-		\end{equation*}
-		\begin{align*}
-			a_1^{(2)} &= g(\Theta_{1,0}^{(1)} x_0 + \Theta_{1,1}^{(1)} x_1 + \Theta_{1,2}^{(1)} x_2 + \Theta_{1,3}^{(1)} x_3) \\
-			a_2^{(2)} &= g(\Theta_{2,0}^{(1)} x_0 + \Theta_{2,1}^{(1)} x_1 + \Theta_{2,2}^{(1)} x_2 + \Theta_{2,3}^{(1)} x_3) \\
-			a_3^{(2)} &= g(\Theta_{3,0}^{(1)} x_0 + \Theta_{3,1}^{(1)} x_1 + \Theta_{3,2}^{(1)} x_2 + \Theta_{3,3}^{(1)} x_3) \\
-			h_\Theta(x) &= g(\Theta_{1,0}^{(2)} a_0^{(2)} + \Theta_{1,1}^{(2)} a_1^{(2)} + \Theta_{1,2}^{(2)} a_2^{(2)} + \Theta_{1,3}^{(2)} a_3^{(2)})\\
-			&= g(z^3)\\
-			&= a_1^{(3)}
-		\end{align*}
-    \end{minipage}%
-    \begin{minipage}{0.5\textwidth}
-    	\centering
-    	\begin{tikzpicture}
-			\begin{scope}[every node/.style={circle,thick,draw,minimum size=10mm}]
-				\node (x_0) at (0,4.5) {$+1$};
-				\node (x_1) at (0,3) {$x_1$};
-				\node (x_2) at (0,1.5) {$x_2$};
-				\node (x_3) at (0,0) {$x_3$};
+	\begin{figure}[!h]
+	    \centering
+	    \begin{minipage}{.5\textwidth}
+	    	\centering
+	        \begin{equation*}
+				\begin{bmatrix} 
+					x_0 \\
+					x_1 \\
+					x_2 \\
+					x_3 \\
+				\end{bmatrix}
+				\rightarrow
+				\begin{bmatrix} 
+					a_1^{(2)} \\
+					a_2^{(2)} \\
+					a_3^{(2)} \\
+				\end{bmatrix}
+				\rightarrow
+				h_\Theta(x)
+			\end{equation*}
+			\begin{align*}
+				a_1^{(2)} &= g(\Theta_{1,0}^{(1)} x_0 + \Theta_{1,1}^{(1)} x_1 + \Theta_{1,2}^{(1)} x_2 + \Theta_{1,3}^{(1)} x_3) \\
+				a_2^{(2)} &= g(\Theta_{2,0}^{(1)} x_0 + \Theta_{2,1}^{(1)} x_1 + \Theta_{2,2}^{(1)} x_2 + \Theta_{2,3}^{(1)} x_3) \\
+				a_3^{(2)} &= g(\Theta_{3,0}^{(1)} x_0 + \Theta_{3,1}^{(1)} x_1 + \Theta_{3,2}^{(1)} x_2 + \Theta_{3,3}^{(1)} x_3) \\
+				h_\Theta(x) &= g(\Theta_{1,0}^{(2)} a_0^{(2)} + \Theta_{1,1}^{(2)} a_1^{(2)} + \Theta_{1,2}^{(2)} a_2^{(2)} + \Theta_{1,3}^{(2)} a_3^{(2)})\\
+				&= g(z^3)\\
+				&= a_1^{(3)}
+			\end{align*}
+	    \end{minipage}%
+	    \begin{minipage}{0.5\textwidth}
+	    	\centering
+	    	\begin{tikzpicture}
+				\begin{scope}[every node/.style={circle,thick,draw,minimum size=10mm}]
+					\node (x_0) at (0,4.5) {$+1$};
+					\node (x_1) at (0,3) {$x_1$};
+					\node (x_2) at (0,1.5) {$x_2$};
+					\node (x_3) at (0,0) {$x_3$};
 
-				\node (a_0^2) at (2,4.5) {$+1$};
-				\node (a_1^2) at (2,3) {$a_1^{(2)}$};
-				\node (a_2^2) at (2,1.5) {$a_2^{(2)}$};
-				\node (a_3^2) at (2,0) {$a_3^{(2)}$};
+					\node (a_0^2) at (2,4.5) {$+1$};
+					\node (a_1^2) at (2,3) {$a_1^{(2)}$};
+					\node (a_2^2) at (2,1.5) {$a_2^{(2)}$};
+					\node (a_3^2) at (2,0) {$a_3^{(2)}$};
 
-				\node (a_1^3) at (4,2.25) {$a_1^{(3)}$};
-			\end{scope}
-			\begin{scope}[]
-				\path [->] (x_0) edge node {} (a_1^2);
-				\path [->] (x_0) edge node {} (a_2^2);
-				\path [->] (x_0) edge node {} (a_3^2);
+					\node (a_1^3) at (4,2.25) {$a_1^{(3)}$};
+				\end{scope}
+				\begin{scope}[]
+					\path [->] (x_0) edge node {} (a_1^2);
+					\path [->] (x_0) edge node {} (a_2^2);
+					\path [->] (x_0) edge node {} (a_3^2);
 
-				\path [->] (x_1) edge node {} (a_1^2);
-				\path [->] (x_1) edge node {} (a_2^2);
-				\path [->] (x_1) edge node {} (a_3^2);
+					\path [->] (x_1) edge node {} (a_1^2);
+					\path [->] (x_1) edge node {} (a_2^2);
+					\path [->] (x_1) edge node {} (a_3^2);
 
-				\path [->] (x_2) edge node {} (a_1^2);
-				\path [->] (x_2) edge node {} (a_2^2);
-				\path [->] (x_2) edge node {} (a_3^2);
+					\path [->] (x_2) edge node {} (a_1^2);
+					\path [->] (x_2) edge node {} (a_2^2);
+					\path [->] (x_2) edge node {} (a_3^2);
 
-				\path [->] (x_3) edge node {} (a_1^2);
-				\path [->] (x_3) edge node {} (a_2^2);
-				\path [->] (x_3) edge node {} (a_3^2);
+					\path [->] (x_3) edge node {} (a_1^2);
+					\path [->] (x_3) edge node {} (a_2^2);
+					\path [->] (x_3) edge node {} (a_3^2);
 
-				\path [->] (a_0^2) edge node {} (a_1^3);
-				\path [->] (a_1^2) edge node {} (a_1^3);
-				\path [->] (a_2^2) edge node {} (a_1^3);
-				\path [->] (a_3^2) edge node {} (a_1^3);
-			\end{scope}
-		\end{tikzpicture}
-    \end{minipage}
-\end{figure}
+					\path [->] (a_0^2) edge node {} (a_1^3);
+					\path [->] (a_1^2) edge node {} (a_1^3);
+					\path [->] (a_2^2) edge node {} (a_1^3);
+					\path [->] (a_3^2) edge node {} (a_1^3);
+				\end{scope}
+			\end{tikzpicture}
+	    \end{minipage}
+	\end{figure}
 
 \newpage
-
 
 
 %======================================================
 %========================WEEK 5========================
 %======================================================
 \section{Week 5: Artificial Neural Network Learning}
-\subsection{Symbols}
+\subsection{Notation}
 	\begin{easylist} 
 	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
 		& $L$ : total number of layers in the network
 		& $s_l$ : number of units (not counting bias unit) in layer $l$
 		& $K$ : number of output units/classes
 		& $h_\Theta(x)_k$ : hypothesis that results in the kth output
+		& $\delta_k$ : Error signal 
 	\end{easylist}
 
 \subsection{Cost Function}
@@ -362,15 +359,15 @@
 		J(\Theta) = - \frac{1}{m} \sum_{i=1}^m \sum_{k=1}^K \left[y^{(i)}_k \log ((h_\Theta (x^{(i)}))_k) + (1 - y^{(i)}_k)\log (1 - (h_\Theta(x^{(i)}))_k)\right] + \frac{\lambda}{2m}\sum_{l=1}^{L-1} \sum_{i=1}^{s_l} \sum_{j=1}^{s_{l+1}} ( \Theta_{j,i}^{(l)})^2
 	\end{equation*}
 	\begin{align*}
-		\text{Picks training example} && 
+		\text{Picking training example} && 
 			\sum_{i=1}^m\\
-		\text{Picks output node} && 
+		\text{Picking output node} && 
 			\sum_{k=1}^K\\
-		\text{Picks layer} && 
+		\text{Picking layer} && 
 			\sum_{l=1}^{L-1}\\
-		\text{Picks node} && 
+		\text{Picking node} && 
 			\sum_{i=1}^{s_l}\\
-		\text{Picks $\Theta$} && 
+		\text{Picking $\Theta$} && 
 			\sum_{j=1}^{s_{l+1}}\\
 	\end{align*}
 
@@ -381,19 +378,69 @@
 	\item Using $y^{(t)}$, compute $\delta^L=a^{(L)} - y^{(t)}$
 	\item Compute $\delta^{(L-1)}, \delta^{(L-2)},\dots,\delta^{(2)}$ using $\delta^{(l)} = ((\Theta^{(l)})^T \delta^{(l+1)})\ .*\ a^{(l)}\ .*\ (1 - a^{(l)})$
 	\item $\Delta^{(l)}_{i,j} := \Delta^{(l)}_{i,j} + a_j^{(l)} \delta_i^{(l+1)}$ or with vectorization $\Delta^{(l)} := \Delta^{(l)} + \delta^{(l+1)}(a^{(l)})^\intercal$
-	\item $\frac \partial {\partial \Theta_{ij}^{(l)}} J(\Theta) = D_{ij}^{(l)}$ where 
+	\item $\frac {\partial} {\partial \Theta_{ij}^{(l)}} J(\Theta) = D_{ij}^{(l)}$ where 
 		$\begin{cases}
-			D^{(l)}_{i,j} := \dfrac{1}{m}\Delta^{(l)}_{i,j} \text{ (j = 0)}\\
-			D^{(l)}_{i,j} := \dfrac{1}{m}\left(\Delta^{(l)}_{i,j} + \lambda\Theta^{(l)}_{i,j}\right) \text{ (j $\neq$ 0)}
+			D^{(l)}_{i,j} := \frac{1}{m}\Delta^{(l)}_{i,j} \text{ (j = 0)}\\
+			D^{(l)}_{i,j} := \frac{1}{m}\left(\Delta^{(l)}_{i,j} + \lambda\Theta^{(l)}_{i,j}\right) \text{ (j $\neq$ 0)}\\
 		\end{cases}$
 \end{enumerate}
 
-\subsection{Backpropagation Error Derivation}
+\subsection{Backpropagation Derivation - Base Case}
 	\begin{align*}
-		\delta_j^{(l)} &= \dfrac{\partial}{\partial z_j^{(l)}} cost(t)\\
-		\delta^{(l)} &= ((\Theta^{(l)})^T \delta^{(l+1)})\ .* g^\prime(z^{(l)}) \\
-		g^\prime(z^{(l)}) &= a^{(l)}\ .*\ (1 - a^{(l)})
+		\frac{\partial C}{\partial w_{ij}} &= \frac{\partial C}{\partial z_{j}} \frac{\partial z_{j}}{\partial w_{ij}} &&
+			\text{Cost $C$ varies wrt input accumulator $z_j$, $z_j$ varies wrt $w_{ij}$ (Chain Rule)}\\
+		\frac{\partial C}{\partial z_j} &= \frac{\partial}{\partial z_j} (y_j - a_j)^2 &&
+			\text{Cost defined as $(y_j - a_j)^2$}\\
+		&= \frac{\partial}{\partial z_j} (y_j - g(z_j))^2\\
+		&= -2(y_j - g(z_j))g^\prime(z_j)\\
+		g^\prime(z_j) &= \frac{d}{dz_j} \frac{1}{1+e^{-z_j}} &&
+			\text{Derivative of logistic function}\\
+		&= \frac{1}{1+e^{-z_j}} \frac{e^{-z_j}}{1+e^{-z_j}}\\
+		&= g(z_j) (1-g(z_j))\\
+		\frac{\partial C}{\partial z_j} &= -2(y_j - g(z_j))g(z_j)(1-g(z_j))\\
+		&= -2(y_j - a_j)a_j(1-a_j)\\
+		\frac{\partial z_{j}}{\partial w_{ij}} &= \frac{\partial}{\partial w_{ij}} \sum_q a_q w_{q,j} &&
+			\text{Definition of $z_j$ as sum of previous node's inputs and their weights}\\
+		&= a_i\\
+		\frac{\partial C}{\partial w_{ij}} &= -2(y_j - a_j)a_j(1-a_j)(a_i)\\
+		&= -\Delta_j a_i
 	\end{align*}
+
+\subsection{Backpropagation Derivation - Recursive Case}
+	\begin{align*}
+		\frac {\partial C}{\partial w_{i,j}} &= \sum_k (\frac{\partial C}{\partial z_k} \frac{\partial z_k}{\partial a_j} \frac{\partial a_j}{\partial z_j} \frac{\partial z_j}{\partial w_{i,j}})
+			&& \text{$C$ depends on $z_k$, $z_k$ depends on $a_j$, $a_j$ depends on $z_j$, $z_j$ depends on $w_{i.j}$} \\
+		\frac {\partial C}{\partial z_k} &= -\Delta_k\\
+		\frac {\partial z_k}{\partial a_j} &= \frac {\partial}{\partial a_j} \sum_s a_s w_{s,k}\\
+		&= w_{j,k}\\
+		\frac {\partial a_j}{\partial z_j} &= \frac {\partial}{\partial z_j} g(z_j)\\
+		&= g(z_j)(1-g(z_j))\\
+		&= a_j(1 - a_j)\\
+		\frac {\partial z_j}{\partial w_{i,j}} &= \frac {\partial}{\partial w_{i,j}} \sum_q a_q w_{q,j}\\
+		&= a_i\\
+		\frac {\partial C}{\partial w_{i,j}} &= \sum_k (-\Delta_k w_{j,k} a_j(1 - a_j) a_i)\\
+		&= \sum_k (-\Delta_k w_{j,k}) a_j(1 - a_j) a_i\\
+		&= -\Delta_j a_i
+	\end{align*}
+
+\subsection{Backpropagation Intuition}
+	$\delta_k$ is the error signal from the output
+	\begin{equation*}
+		\delta_k = (a_k - t_k)g^\prime_k(z_k)
+	\end{equation*}
+	so, error wrt output weights is
+	\begin{equation*}
+		\frac {\partial E}{\partial w_{j,k}} = \delta_k a_j
+	\end{equation*}
+	similarly, error wrt internal weights is
+	\begin{equation*}
+		\frac {\partial E}{\partial w_{i,j}} = \delta_j a_i
+	\end{equation*}
+	the error is determined by following layer's error, so it may also be understood as
+	\begin{equation*}
+		\frac {\partial E}{\partial w_{i,j}} = g^\prime_j(z_j) \sum_k (\delta_k w_{j,k}) a_i
+	\end{equation*}
+
 
 \subsection{Gradient Checking}
 \begin{easylist} 
@@ -420,10 +467,14 @@
 \newpage
 
 
+\section{Sources}
+https://math.stackexchange.com/questions/477207/derivative-of-cost-function-for-logistic-regression
 
+https://pdfs.semanticscholar.org/69c2/814c7f8ca16aa836fd32e3c4975f8208e63f.pdf
 
+https://stats.stackexchange.com/questions/94387/how-to-derive-errors-in-neural-network-with-the-backpropagation-algorithm
 
-
+https://theclevermachine.wordpress.com/2014/09/06/derivation-error-backpropagation-gradient-descent-for-neural-networks/
 
 
 

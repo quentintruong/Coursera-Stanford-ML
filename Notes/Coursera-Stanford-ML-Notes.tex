@@ -9,7 +9,8 @@
 \usetikzlibrary{arrows.meta} % Arrows for nodes
 \pgfplotsset{width=10cm,compat=1.9}
 \usepackage[bottom]{footmisc}  %Glue footnotes to bottom
-
+\usepackage{graphicx}
+\graphicspath{ {imgs/} }
 
 \title{Coursera-Stanford-ML-Notes}
 \author{Quentin Truong}
@@ -20,7 +21,7 @@
 \maketitle
 \tableofcontents
 \pagenumbering{arabic}
-\newpage
+\clearpage
 
 
 
@@ -40,7 +41,7 @@
 		&& Nonclustering: find structure in chaos
 	\end{easylist}
 
-\newpage
+\clearpage
 
 
 
@@ -91,7 +92,7 @@
 		\theta &= (X^\intercal \cdot X)^\text{-1} \cdot X^\intercal \cdot y
 	\end{align*}
 
-\newpage
+\clearpage
 
 
 
@@ -224,7 +225,7 @@
 			)^{-1} X^\intercal y
 	\end{align*}
 
-\newpage
+\clearpage
 
 
 
@@ -246,6 +247,7 @@
 		& Bias node gives each node a trainable constant value
 		&& Allows bias weight to shift the activation curve left/right
 		&& Other weights affect steepness
+		& Fun fact: For image recognition, particular order of pixels does not matter for ANN (but does for humans), you just need to keep the convention the same
 	\end{easylist}
 
 \subsection{Notation}
@@ -265,7 +267,7 @@
 		&= \Theta_{k,0}^{(j-1)}a_0^{(j-1)} + \Theta_{k,1}^{(j-1)}a_1^{(j-1)} + ... + \Theta_{k,n}^{(j-1)}a_n^{(j-1)} \\
 		z^{(j)} &= \Theta^{(j-1)}a^{(j-1)} \\
 		a^{(j)} &= g(z^{(j)})
-	\end{align*}
+	\end{align*}\newpage
 
 \subsection{Sample Three Layer System}
 	\begin{figure}[!h]
@@ -339,7 +341,8 @@
 	    \end{minipage}
 	\end{figure}
 
-\newpage
+\clearpage
+
 
 
 %======================================================
@@ -374,18 +377,18 @@
 	\end{align*}
 
 \subsection{Backpropagation Algorithm}
-\begin{enumerate}
-	\item Set $a(1):=x(t)$
-	\item Perform forward propagation to compute $a(l)$ for $l=2,3,…,L$
-	\item Using $y^{(t)}$, compute $\delta^L=a^{(L)} - y^{(t)}$
-	\item Compute $\delta^{(L-1)}, \delta^{(L-2)},\dots,\delta^{(2)}$ using $\delta^{(l)} = ((\Theta^{(l)})^T \delta^{(l+1)})\ .*\ a^{(l)}\ .*\ (1 - a^{(l)})$
-	\item $\Delta^{(l)}_{i,j} := \Delta^{(l)}_{i,j} + a_j^{(l)} \delta_i^{(l+1)}$ or with vectorization $\Delta^{(l)} := \Delta^{(l)} + \delta^{(l+1)}(a^{(l)})^\intercal$
-	\item $\frac {\partial} {\partial \Theta_{ij}^{(l)}} J(\Theta) = D_{ij}^{(l)}$ where 
-		$\begin{cases}
-			D^{(l)}_{i,j} := \frac{1}{m}\Delta^{(l)}_{i,j} \text{ (j = 0)}\\
-			D^{(l)}_{i,j} := \frac{1}{m}\left(\Delta^{(l)}_{i,j} + \lambda\Theta^{(l)}_{i,j}\right) \text{ (j $\neq$ 0)}\\
-		\end{cases}$
-\end{enumerate}
+	\begin{enumerate}
+		\item Set $a(1):=x(t)$
+		\item Perform forward propagation to compute $a(l)$ for $l=2,3,…,L$
+		\item Using $y^{(t)}$, compute $\delta^L=a^{(L)} - y^{(t)}$
+		\item Compute $\delta^{(L-1)}, \delta^{(L-2)},\dots,\delta^{(2)}$ using $\delta^{(l)} = ((\Theta^{(l)})^T \delta^{(l+1)})\ .*\ a^{(l)}\ .*\ (1 - a^{(l)})$
+		\item $\Delta^{(l)}_{i,j} := \Delta^{(l)}_{i,j} + a_j^{(l)} \delta_i^{(l+1)}$ or with vectorization $\Delta^{(l)} := \Delta^{(l)} + \delta^{(l+1)}(a^{(l)})^\intercal$
+		\item $\frac {\partial} {\partial \Theta_{ij}^{(l)}} J(\Theta) = D_{ij}^{(l)}$ where 
+			$\begin{cases}
+				D^{(l)}_{i,j} := \frac{1}{m}\Delta^{(l)}_{i,j} \text{ (j = 0)}\\
+				D^{(l)}_{i,j} := \frac{1}{m}\left(\Delta^{(l)}_{i,j} + \lambda\Theta^{(l)}_{i,j}\right) \text{ (j $\neq$ 0)}\\
+			\end{cases}$
+	\end{enumerate}
 
 \subsection{Backpropagation Derivation - Base Case}
 	\begin{align*}
@@ -447,7 +450,6 @@
 		\frac {\partial E}{\partial w_{i,j}} = g^\prime_j(z_j) \sum_k (\delta_k w_{j,k}) a_i
 	\end{equation*}
 
-
 \subsection{Gradient Checking}
 \begin{easylist} 
 	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
@@ -471,15 +473,63 @@
 		&& A good choice of $\epsilon$ init is $\epsilon = \frac {\sqrt 6}{\sqrt{L_{in} + L_{out}}}$, where $L_{in} = s_l$ and $L_{out} = s_{l+1}$, the number of units in the layers adjacent to $\Theta^{(l)}$
 	\end{easylist}
 
-\newpage
-
-
-\section{Week 6: }
+\clearpage
 
 
 
+%======================================================
+%========================WEEK 6========================
+%======================================================
+\section{Week 6: Advice for Machine Learning}
+\subsection{Overview}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Training set: 60\%
+		& Cross validation set: 20\%
+		& Test set: 20\%
+		& Randomize your data and plot learning curves to determine high/low variance
+	\end{easylist} 
+
+\subsection{Evauating Hypothesis}
+	\begin{align*}
+		\text{Linear regression} && 
+			J_{test}(\Theta) &= \dfrac{1}{2m_{test}} \sum_{i=1}^{m_{test}}(h_\Theta(x^{(i)}_{test}) - y^{(i)}_{test})^2\\
+		\text{Classification} &&
+			err(h_\Theta(x),y) &= 
+				\begin{cases} 
+					1 \text{ if } h_\Theta(x) \geq 0.5 \text{ and } y = 0\\
+					1 \text{ if } h_\Theta(x) < 0.5 \text{ and } y = 1\\
+					0 \text{ otherwise}
+				\end{cases}\\
+		\text{Test Error} &&
+			&= \dfrac{1}{m_{test}} \sum^{m_{test}}_{i=1} err(h_\Theta(x^{(i)}_{test}), y^{(i)}_{test})
+	\end{align*}
+	
+\subsection{Bias, Variance, Learning Curves}	
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& High variance is when overfitting data
+		&& Get more training examples, try a smaller set of features, increase lambda
+		& High bias is when underfitting data
+		&& Add features, add polynomial features, decrease lambda
+		& Small neural networks are more prone to underfitting and are cheaper
+		& Large neural networks are more prone to overfitting and are more expensive
+	\end{easylist} 
+	\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.8]{learning_curve_HB}
+	\includegraphics[scale=0.8]{learning_curve_HV}
+	\includegraphics[scale=0.6]{learning_curve_D}
+	\end{figure}
+
+\clearpage
 
 
+
+%======================================================
+%========================WEEK 7========================
+%======================================================
+\section{Week 7: }
 
 
 

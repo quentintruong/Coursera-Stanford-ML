@@ -15,14 +15,17 @@
 \contentsline {subsection}{\numberline {4.1}Overview}{7}
 \contentsline {subsection}{\numberline {4.2}Notation}{7}
 \contentsline {subsection}{\numberline {4.3}Equations}{7}
-\contentsline {subsection}{\numberline {4.4}Sample Three Layer System}{7}
-\contentsline {section}{\numberline {5}Week 5: Artificial Neural Network Learning}{8}
-\contentsline {subsection}{\numberline {5.1}Notation}{8}
-\contentsline {subsection}{\numberline {5.2}Cost Function}{8}
-\contentsline {subsection}{\numberline {5.3}Backpropagation Algorithm}{8}
-\contentsline {subsection}{\numberline {5.4}Backpropagation Derivation - Base Case}{9}
-\contentsline {subsection}{\numberline {5.5}Backpropagation Derivation - Recursive Case}{9}
-\contentsline {subsection}{\numberline {5.6}Backpropagation Intuition}{10}
-\contentsline {subsection}{\numberline {5.7}Gradient Checking}{10}
-\contentsline {subsection}{\numberline {5.8}Random Initialization}{10}
-\contentsline {section}{\numberline {6}Sources}{11}
+\contentsline {subsection}{\numberline {4.4}Sample Three Layer System}{8}
+\contentsline {section}{\numberline {5}Week 5: Artificial Neural Network Learning}{9}
+\contentsline {subsection}{\numberline {5.1}Notation}{9}
+\contentsline {subsection}{\numberline {5.2}Cost Function}{9}
+\contentsline {subsection}{\numberline {5.3}Backpropagation Algorithm}{9}
+\contentsline {subsection}{\numberline {5.4}Backpropagation Derivation - Base Case}{10}
+\contentsline {subsection}{\numberline {5.5}Backpropagation Derivation - Recursive Case}{10}
+\contentsline {subsection}{\numberline {5.6}Backpropagation Intuition}{11}
+\contentsline {subsection}{\numberline {5.7}Gradient Checking}{11}
+\contentsline {subsection}{\numberline {5.8}Random Initialization}{11}
+\contentsline {section}{\numberline {6}Week 6: Advice for Machine Learning}{12}
+\contentsline {subsection}{\numberline {6.1}Overview}{12}
+\contentsline {subsection}{\numberline {6.2}Evauating Hypothesis}{12}
+\contentsline {subsection}{\numberline {6.3}Bias, Variance, Learning Curves}{12}

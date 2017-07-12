@@ -1,13 +1,14 @@
 \documentclass[11pt, oneside]{article}  
-\usepackage{amsmath, amssymb}
-\usepackage[margin=0.5in]{geometry}
-\usepackage[ampersand]{easylist}
-\usepackage{subcaption}
-\usepackage{csquotes}
-\usepackage{pgfplots}
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta}
+\usepackage{amsmath, amssymb} % Math packages
+\usepackage[margin=0.5in]{geometry} % Margins
+\usepackage[ampersand]{easylist} % Bullets for lists
+\usepackage{subcaption} % Side by side
+\usepackage{csquotes} % Quotes
+\usepackage{pgfplots} % Plotting
+\usepackage{tikz} % Graphs
+\usetikzlibrary{arrows.meta} % Arrows for nodes
 \pgfplotsset{width=10cm,compat=1.9}
+\usepackage[bottom]{footmisc}  %Glue footnotes to bottom
 
 
 \title{Coursera-Stanford-ML-Notes}
@@ -136,7 +137,7 @@
 		J(\theta) &= \frac{1}{m} \sum^m_{i=1}\text{Cost}(h_\theta(x^i),y^i) \\
 		J(\theta) &= \frac{-1}{m} \sum^m_{i=1} \left[y^i\log(h_\theta(x^i)) + (1-y^i)\log(1 - h_\theta(x^i))\right] 
 	\end{align*}
-\iffalse
+\iftrue
 	\begin{figure}[!h]
 		\begin{subfigure}{.5\textwidth}
 			\centering
@@ -197,6 +198,7 @@
 		\frac{\partial}{\partial \theta_j}J(\theta) &= -\frac{1}{m}\sum_{i=1}^m \left[y^i x^i_j - x^i_jh_\theta(x^i)\right]\\
 		\frac{\partial}{\partial \theta_j}J(\theta) &= \frac{1}{m}\sum_{i=1}^m \left[h_\theta(x^i) - y^i\right]x^i_j
 	\end{align*}
+	Credit\footnote{https://math.stackexchange.com/questions/477207/derivative-of-cost-function-for-logistic-regression}
 
 \subsection{Regularization}
 	\begin{align*}
@@ -422,6 +424,10 @@
 		&= \sum_k (-\Delta_k w_{j,k}) a_j(1 - a_j) a_i\\
 		&= -\Delta_j a_i
 	\end{align*}
+	Credit
+	\footnote{https://pdfs.semanticscholar.org/69c2/814c7f8ca16aa836fd32e3c4975f8208e63f.pdf}
+	\footnote{https://stats.stackexchange.com/questions/94387/how-to-derive-errors-in-neural-network-with-the-backpropagation-algorithm}
+	\footnote{https://theclevermachine.wordpress.com/2014/09/06/derivation-error-backpropagation-gradient-descent-for-neural-networks/}
 
 \subsection{Backpropagation Intuition}
 	$\delta_k$ is the error signal from the output
@@ -462,19 +468,19 @@
 		&& All hidden units would receive the same signal and the same updates
 		&& Results in finding only one feature, redundantly copied many times over
 		& Fixed by randomly initializing each $\Theta_{ij}^{(l)}$ to a value in $[-\epsilon, \epsilon]$
+		&& A good choice of $\epsilon$ init is $\epsilon = \frac {\sqrt 6}{\sqrt{L_{in} + L_{out}}}$, where $L_{in} = s_l$ and $L_{out} = s_{l+1}$, the number of units in the layers adjacent to $\Theta^{(l)}$
 	\end{easylist}
 
 \newpage
 
 
-\section{Sources}
-https://math.stackexchange.com/questions/477207/derivative-of-cost-function-for-logistic-regression
+\section{Week 6: }
 
-https://pdfs.semanticscholar.org/69c2/814c7f8ca16aa836fd32e3c4975f8208e63f.pdf
 
-https://stats.stackexchange.com/questions/94387/how-to-derive-errors-in-neural-network-with-the-backpropagation-algorithm
 
-https://theclevermachine.wordpress.com/2014/09/06/derivation-error-backpropagation-gradient-descent-for-neural-networks/
+
+
+
 
 
 

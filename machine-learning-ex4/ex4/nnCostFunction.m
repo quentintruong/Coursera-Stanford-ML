@@ -62,11 +62,44 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Forward propogate
+a1 = [ones(m, 1), X];
+z2 = a1 * Theta1';
+a2 = [ones(size(z2, 1), 1), sigmoid(z2)];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
 
+% Generate logical matrix for y
+myY = [y == 1];
+for inc = 2:num_labels
+    myY = [myY, y == inc];
+endfor
 
+% Compute cost
+J = 1 / m * sum(sum(-myY .* log(a3) - (1 - myY) .* log(1 - a3) ));
 
+% Truncate bias weight from Theta
+myTheta1 = Theta1(:,2:end);
+myTheta2 = Theta2(:,2:end);
 
+% Compute regularized cost
+J = J + lambda / 2 / m * (sum(sum(myTheta1.^2)) + sum(sum(myTheta2.^2)));
 
+% Calculate del
+d3 = a3 - myY;
+d2 = d3 * Theta2;
+d2 = d2(:,2:end);
+d2 = d2 .* sigmoidGradient(z2);
+
+% Calculate partial derivative of cost wrt respective weights
+D1 = d2' * a1;
+D2 = d3' * a2;
+Theta1_grad = 1 / m * D1;
+Theta2_grad = 1 / m * D2;
+
+% Calculate partial derivative of cost wrt respective weights and regularization
+Theta1_grad = [Theta1_grad(:, 1) , Theta1_grad(:, 2:end) + lambda / m .* myTheta1];
+Theta2_grad = [Theta2_grad(:, 1) , Theta2_grad(:, 2:end) + lambda / m .* myTheta2];
 
 
 

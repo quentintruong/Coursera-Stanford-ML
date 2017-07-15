@@ -8,9 +8,11 @@
 \usepackage{tikz} % Graphs
 \usetikzlibrary{arrows.meta} % Arrows for nodes
 \pgfplotsset{width=10cm,compat=1.9}
-\usepackage[bottom]{footmisc}  %Glue footnotes to bottom
+\usepackage[bottom]{footmisc}  % Glue footnotes to bottom
 \usepackage{graphicx}
 \graphicspath{ {imgs/} }
+\usepackage{mathtools} 
+\DeclarePairedDelimiter\abs{\lvert}{\rvert} % for abs val
 
 \title{Coursera-Stanford-ML-Notes}
 \author{Quentin Truong}
@@ -522,6 +524,34 @@
 	\includegraphics[scale=0.6]{learning_curve_D}
 	\end{figure}
 
+\subsection{Error Analysis}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Difficult to know which feature is actually most helpful
+		& Start with simple algorithm and test it on cross validation data
+		& Look at learning curves to decide where to focus
+		& Manually look at errors in cross validation data to spot trends
+		& Iterate according to a single numerical value of error
+	\end{easylist} 
+
+\subsection{Precision and Recall}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Better metric for skewed classes, where there is only a very small chance of $y=1$
+		& Precision = $\frac{\text{true positives}} {\text{predicted positives}}$
+		& Recall = $\frac{\text{true positives}} {\text{actual positives}}$
+		& Tradeoff between precision and recall by changing threshold
+		&& Predict 1 if $h_\theta(x) \geq$ threshold
+		& F$_1$ score = $2\frac{PR}{P + R}$
+		&& Maximize F$_1$ score for picking threshold
+	\end{easylist} 
+
+\subsection{Large Data Sets}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Use large data (many training examples) if a human can confidently predict the results from the feature set
+		& Learning algorithms with many features/hidden units may need more data
+	\end{easylist}
 \clearpage
 
 
@@ -529,7 +559,48 @@
 %======================================================
 %========================WEEK 7========================
 %======================================================
-\section{Week 7: }
+\section{Week 7: Support Vector Machines}
+\subsection{Overview}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Change cost function and lambda, but otherwise is basically logistic regression
+		& Creates larger margins
+		& Use prewritten SVM's because they have computational tricks to make them efficient enough to work
+		& Use feature scaling
+		& Large C: lower bias, higher variance
+		& Large $\sigma$: higher bias, lower variance, varies more smoothly
+		& If n is small and m is intermediate, use SVM w/ gaussian kernel
+		& If n is small and m is large, add features and use logistic regression or SVM w/o kernel
+	\end{easylist}
+
+\subsection{Large Margin Classification}
+	\begin{equation*}
+		\text{min$_\theta$ } C \sum_{i=1}^m \left[y^{(i)}cost_1(\theta^\intercal x^{(i)}) + (1 - y^{(i)}) cost_0(\theta^\intercal x^{(i)}) \right] + \frac{1}{2} \sum_{i=1}^n \theta_j^2
+	\end{equation*}
+	\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.6]{svm_cost}
+	\end{figure}
+	
+\subsection{Math behind SVM}
+	\begin{easylist}
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& $\theta^\intercal x^{(i)} = p^{(i)} \abs{\theta}$
+		& Try to maximize $p^{(i)}$ so that $\abs{\theta}$ can be minimized 
+	\end{easylist}
+	
+\subsection{Kernels}
+	\begin{easylist}
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Compute features according to proximity to landmarks $l^{(i)}$
+		&& Pick landmarks based on training data
+		&& Gaussian Kernel: $f_1 =$ similarity$(x,l^{(1)}) =$ exp$(-\frac{\abs{x-l^{(1)}}^2} {2\sigma^2})$
+		& Other kernels exist, like linear or polynomial; all must satisfy Mercer's Theorem
+	\end{easylist}
+
+
+
+
 
 
 

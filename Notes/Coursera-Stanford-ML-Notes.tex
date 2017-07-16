@@ -531,7 +531,7 @@
 		& Start with simple algorithm and test it on cross validation data
 		& Look at learning curves to decide where to focus
 		& Manually look at errors in cross validation data to spot trends
-		& Iterate according to a single numerical value of error
+		& Iterate towards improvement according to a single numerical value of error
 	\end{easylist} 
 
 \subsection{Precision and Recall}
@@ -577,10 +577,6 @@
 	\begin{equation*}
 		\text{min$_\theta$ } C \sum_{i=1}^m \left[y^{(i)}cost_1(\theta^\intercal x^{(i)}) + (1 - y^{(i)}) cost_0(\theta^\intercal x^{(i)}) \right] + \frac{1}{2} \sum_{i=1}^n \theta_j^2
 	\end{equation*}
-	\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.6]{svm_cost}
-	\end{figure}
 	
 \subsection{Math behind SVM}
 	\begin{easylist}
@@ -588,6 +584,10 @@
 		& $\theta^\intercal x^{(i)} = p^{(i)} \abs{\theta}$
 		& Try to maximize $p^{(i)}$ so that $\abs{\theta}$ can be minimized 
 	\end{easylist}
+	\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.6]{svm_cost}
+	\end{figure}
 	
 \subsection{Kernels}
 	\begin{easylist}
@@ -597,6 +597,108 @@
 		&& Gaussian Kernel: $f_1 =$ similarity$(x,l^{(1)}) =$ exp$(-\frac{\abs{x-l^{(1)}}^2} {2\sigma^2})$
 		& Other kernels exist, like linear or polynomial; all must satisfy Mercer's Theorem
 	\end{easylist}
+\clearpage
+
+
+
+%======================================================
+%========================WEEK 8========================
+%======================================================
+\section{Week 8: Unsupervised Learning}
+\subsection{Overview}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Unsupervised learning will find structure in data
+		& K-Means is a way to cluster
+		&& Pick number of clusters $K$ by hand or application
+		&& K-Means can get stuck in local optima, especially for small numbers of clusters
+		&&& Run algorithm many times, pick cluster with lowest cost
+	\end{easylist}
+
+\subsection{K-Means Notation}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& K: number of clusters
+		& $x^{(1)}$: training examples $\in \mathbb{R}$
+		& $\{x^{(1)}, x^{(2)}, ..., x^{(m)}\}$: training set
+		& $\mu_k$: average of points assigned to cluster $k$
+		& $c^{(i)}$: index of cluster centroid closest to $x^{(i)}$
+	\end{easylist}
+
+\subsection{K-Means Distortion Function/Optimization Objective}
+	\begin{equation*} 
+		\text{min } J(c^{(1)}, ..., c^{(m)}, \mu_1, ..., \mu_K) = \frac {1}{m} \sum_{i=1}^m \abs{x^{(i)} - \mu_{c^{(i)}}}^2
+	\end{equation*}
+
+\subsection{K-Means Algorithm}
+	\begin{enumerate}
+		\item Randomly initialized $K$ cluster centroids according to $K$ training examples
+		\item $c^{(i)}$ := index of cluster centroid closest to $x^{(i)}$
+		\item $\mu_k$ := average of points assigned to cluster centroid $k$
+	\end{enumerate}
+
+\subsection{Dimensionality Reduction: Principal Component Analysis}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Useful for data compression, visualizations, and speeding up computation
+		& PCA projects data onto lower dimensional surface
+		&& Preprocess data with feature scaling and mean normalization
+		&& Try to maintain at least 85\% variance, preferably 95\%+
+		& Don't use PCA to address overfitting
+	\end{easylist}
+
+\subsection{PCA Notation}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Covariance matrix: $\Sigma = \frac{1}{m} \sum_{i=1}^n (x^{(i)})(x^{(i)})^\intercal$ 
+		& Number of principal components: $k$
+		& $[U, S, V]$ = svd($\Sigma$)
+		&& Matrix of eigenvectors: $U$
+		&& $U_{reduce} = U(:,1:k)$
+		& New inputs: $z = U_{reduce} ^\intercal * x$
+		& Average squared projection error: $\frac {1}{m} \sum_{i=1}^m \abs{x^{(i)} - x_{approx}^{(i)}}^2$
+		& Total variance: $\frac {1}{m} \sum_{i=1}^m \abs{x^{(i)}}^2$
+	\end{easylist}
+
+\subsection{PCA Algorithm}
+	\begin{enumerate}
+		\item Mean normalize and feature scaling
+		\item Compute covariance matrix $\Sigma$ 
+		\item Compute eigenvectors of $\Sigma$ using singular value decomposition
+		\item Compute $z$
+	\end{enumerate}
+
+\subsection{PCA K}
+	\begin{equation*}
+		\text{min$_k$ } \frac {\frac{1}{m} \sum_{i=1}^m \abs{x^{(i)} - x_{approx}^{(i)} }^2 }{\frac{1}{m} \sum_{i=1}^m \abs{x^{(i)}}^2 } \leq 0.01
+	\end{equation*}
+	alternatively, use $S$ from svd($\Sigma$)
+	\begin{equation*}
+		\text{min$_k$ } \frac {\sum_{i=1}^k S_{ii}}{\sum_{i=1}^m S_{ii}} \geq 0.99
+	\end{equation*}
+\clearpage
+
+
+
+%======================================================
+%========================WEEK 9========================
+%======================================================
+\section{Week 9: Anomaly Detection}
+\subsection{Overview}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& g
+	\end{easylist}
+
+
+
+
+
+
+
+
+
+
 
 
 

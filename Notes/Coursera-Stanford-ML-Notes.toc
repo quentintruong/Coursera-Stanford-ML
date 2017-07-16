@@ -37,3 +37,14 @@
 \contentsline {subsection}{\numberline {7.2}Large Margin Classification}{14}
 \contentsline {subsection}{\numberline {7.3}Math behind SVM}{14}
 \contentsline {subsection}{\numberline {7.4}Kernels}{14}
+\contentsline {section}{\numberline {8}Week 8: Unsupervised Learning}{15}
+\contentsline {subsection}{\numberline {8.1}Overview}{15}
+\contentsline {subsection}{\numberline {8.2}K-Means Notation}{15}
+\contentsline {subsection}{\numberline {8.3}K-Means Distortion Function/Optimization Objective}{15}
+\contentsline {subsection}{\numberline {8.4}K-Means Algorithm}{15}
+\contentsline {subsection}{\numberline {8.5}Dimensionality Reduction: Principal Component Analysis}{15}
+\contentsline {subsection}{\numberline {8.6}PCA Notation}{15}
+\contentsline {subsection}{\numberline {8.7}PCA Algorithm}{16}
+\contentsline {subsection}{\numberline {8.8}PCA K}{16}
+\contentsline {section}{\numberline {9}Week 9: Anomaly Detection}{17}
+\contentsline {subsection}{\numberline {9.1}Overview}{17}

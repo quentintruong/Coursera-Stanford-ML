@@ -13,8 +13,8 @@
 \contentsline {subsection}{\numberline {3.5}Regularization}{6}
 \contentsline {section}{\numberline {4}Week 4: Artificial Neural Networks Representation}{7}
 \contentsline {subsection}{\numberline {4.1}Overview}{7}
-\contentsline {subsection}{\numberline {4.2}Notation}{7}
-\contentsline {subsection}{\numberline {4.3}Equations}{7}
+\contentsline {subsection}{\numberline {4.2}ANN Notation}{7}
+\contentsline {subsection}{\numberline {4.3}ANN Equations}{7}
 \contentsline {subsection}{\numberline {4.4}Sample Three Layer System}{8}
 \contentsline {section}{\numberline {5}Week 5: Artificial Neural Network Learning}{9}
 \contentsline {subsection}{\numberline {5.1}Notation}{9}
@@ -44,7 +44,13 @@
 \contentsline {subsection}{\numberline {8.4}K-Means Algorithm}{15}
 \contentsline {subsection}{\numberline {8.5}Dimensionality Reduction: Principal Component Analysis}{15}
 \contentsline {subsection}{\numberline {8.6}PCA Notation}{15}
-\contentsline {subsection}{\numberline {8.7}PCA Algorithm}{16}
-\contentsline {subsection}{\numberline {8.8}PCA K}{16}
+\contentsline {subsection}{\numberline {8.7}PCA: Equations}{15}
+\contentsline {subsection}{\numberline {8.8}PCA Algorithm}{16}
+\contentsline {subsection}{\numberline {8.9}PCA K}{16}
 \contentsline {section}{\numberline {9}Week 9: Anomaly Detection}{17}
 \contentsline {subsection}{\numberline {9.1}Overview}{17}
+\contentsline {subsection}{\numberline {9.2}Gaussion (Normal) Distribution}{17}
+\contentsline {subsection}{\numberline {9.3}Anomaly Detection Algorithm}{17}
+\contentsline {subsection}{\numberline {9.4}Multivariate Gaussion Distribution}{17}
+\contentsline {subsection}{\numberline {9.5}Recommender Systems Notation}{17}
+\contentsline {subsection}{\numberline {9.6}Recommender Systems Algorithm}{18}

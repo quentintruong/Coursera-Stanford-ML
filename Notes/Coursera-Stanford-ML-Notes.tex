@@ -252,7 +252,7 @@
 		& Fun fact: For image recognition, particular order of pixels does not matter for ANN (but does for humans), you just need to keep the convention the same
 	\end{easylist}
 
-\subsection{Notation}
+\subsection{ANN Notation}
 	\begin{easylist} 
 	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
 		& $g(x)$: sigmoid function
@@ -263,7 +263,7 @@
 		& $a_i^{(j)}$: \hyphenquote{}{activation} of unit i in layer j
 	\end{easylist}
 
-\subsection{Equations}
+\subsection{ANN Equations}
 	\begin{align*}
 		z_k^{(j)} &= \Theta_{k,0}^{(j-1)}x_0 + \Theta_{k,1}^{(j-1)}x_1 + ... + \Theta_{k,n}^{(j-1)}x_n \\
 		&= \Theta_{k,0}^{(j-1)}a_0^{(j-1)} + \Theta_{k,1}^{(j-1)}a_1^{(j-1)} + ... + \Theta_{k,n}^{(j-1)}a_n^{(j-1)} \\
@@ -650,15 +650,25 @@
 \subsection{PCA Notation}
 	\begin{easylist} 
 	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
-		& Covariance matrix: $\Sigma = \frac{1}{m} \sum_{i=1}^n (x^{(i)})(x^{(i)})^\intercal$ 
+		& Covariance matrix: $\Sigma$ 
 		& Number of principal components: $k$
 		& $[U, S, V]$ = svd($\Sigma$)
 		&& Matrix of eigenvectors: $U$
 		&& $U_{reduce} = U(:,1:k)$
 		& New inputs: $z = U_{reduce} ^\intercal * x$
-		& Average squared projection error: $\frac {1}{m} \sum_{i=1}^m \abs{x^{(i)} - x_{approx}^{(i)}}^2$
-		& Total variance: $\frac {1}{m} \sum_{i=1}^m \abs{x^{(i)}}^2$
 	\end{easylist}
+
+\subsection{PCA: Equations}
+	\begin{equation*}
+		\Sigma = \frac{1}{m} \sum_{i=1}^n (x^{(i)})(x^{(i)})^\intercal
+	\end{equation*}
+	\begin{equation*}
+		\text{Average squared projection error} = \frac {1}{m} \sum_{i=1}^m \abs{x^{(i)} - x_{approx}^{(i)}}^2
+	\end{equation*}
+	\begin{equation*}
+		\text{Total variance} = \frac {1}{m} \sum_{i=1}^m \abs{x^{(i)}}^2
+	\end{equation*}
+	
 
 \subsection{PCA Algorithm}
 	\begin{enumerate}
@@ -687,21 +697,68 @@
 \subsection{Overview}
 	\begin{easylist} 
 	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
-		& g
+		& Use Anomaly detection over Supervised learning when there a very few positive examples, there are many different types of anomalies, or when future anomalies may not look like current examples
+		& Gaussian Distribution
+		&& Positive $\mu$ shifts bellcurve right
+		&& Small $\sigma$ increases height of bellcurve
+		&& For non-gaussian features, do something like $x_1 \leftarrow log(x_1)$
+		&& Can also create your own features; $x_3 = \frac {x_1}{x_2}$
+		& Multivariate Gaussian will automatically capture correlations between features
+		&& Is more computationally expensive bc $\Sigma^{-1}$
+		&& Should have $m > 10n$ to verify invertibility 
 	\end{easylist}
 
+\subsection{Gaussion (Normal) Distribution}
+	\begin{equation*}
+		p(x) = \prod_{j=1}^n p(x_j; \mu_j; \sigma_j^2) = \prod_{j=1}^n \frac {1}{\sqrt{2\pi}\sigma} \text{exp}\left(-\frac{(x-\mu)^2}{2 \sigma^2}\right)
+	\end{equation*}
+	\begin{equation*}
+		\mu_j = \frac{1}{m} \sum_{i=1}^m x_j^{(i)}
+	\end{equation*}
+	\begin{equation*}
+		\sigma_j^2 = \frac{1}{m} \sum_{i=1}^m (x_j^{(i)} - \mu_j)^2
+	\end{equation*}
 
+\subsection{Anomaly Detection Algorithm}
+	\begin{enumerate}
+		\item Choose features $x_j$ indicative of anomalous examples
+		\item Fit parameters $\mu$ and $\sigma$
+		\item Compute $p(x)$; anomaly if $p(x) < \epsilon$
+	\end{enumerate}
 
+\subsection{Multivariate Gaussion Distribution}
+	\begin{equation*}
+		p(x; \mu; \Sigma) = \frac{1} {(2\pi)^{\frac{n}{2}} \abs{\Sigma}^\frac{1}{2}} \text{exp} \left(-\frac{1}{2}(x-\mu)^\intercal \Sigma^{-1} (x-\mu) \right)
+	\end{equation*}
+	\begin{equation*}
+		\mu = \frac{1}{m} \sum_{i=1}^m x^{(i)}
+	\end{equation*}
+	\begin{equation*}
+		\Sigma = \frac{1}{m} \sum_{i=1}^m (x^{(i)} - \mu) (x^{(i)} - \mu)^\intercal
+	\end{equation*}
 
+\subsection{Recommender Systems Notation}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& $n_u$: number of users
+		& $n_m$: number of movies
+		& $r(i,j) = 1$ if user $j$ has rated movie $i$
+		& $y^{(i,j)}$: rating given by user $j$ to movie $i$
+		& $\theta^{(j)}$: parameter vector for user $j$
+		& $x^{(i)}$: feature vector for movie $i$
+		& $m^{(j)}$: number of movies rated by user $j$
+	\end{easylist}
 
-
-
-
-
-
-
-
-
+\subsection{Recommender Systems Algorithm}
+	\begin{equation*}
+		\text{min}_{\theta^{(1)}, ..., \theta^{(n_u)}} \frac {1}{2} \sum_{j=1}^{n_u} \sum_{i:r(i,j)==1} \left( (\theta^{(j)})^\intercal x^{(i)} - y^{(i,j)} \right)^2 + \frac {\lambda}{2} \sum_{j=1}^{n_u} \sum_{k=1}^{n} (\theta_k^{(j)})^2
+	\end{equation*}
+	\begin{equation*}
+			\theta_k^{(j)} = \theta_k^{(j)} - \alpha \sum_{i:r(i,j)==1} \left( (\theta^{(j)})^\intercal x^{(i)} - y^{(i,j)} \right)x_k^{(i)} \text{ k=0}
+	\end{equation*}
+	\begin{equation*}
+			\theta_k^{(j)} = \theta_k^{(j)} - \alpha \left(\sum_{i:r(i,j)==1} \left( (\theta^{(j)})^\intercal x^{(i)} - y^{(i,j)} \right)x_k^{(i)} + \lambda \theta_k^{(j)} \right)
+	\end{equation*}
 
 
 

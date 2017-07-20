@@ -658,7 +658,7 @@
 		& New inputs: $z = U_{reduce} ^\intercal * x$
 	\end{easylist}
 
-\subsection{PCA: Equations}
+\subsection{PCA Equations}
 	\begin{equation*}
 		\Sigma = \frac{1}{m} \sum_{i=1}^n (x^{(i)})(x^{(i)})^\intercal
 	\end{equation*}
@@ -703,12 +703,14 @@
 		&& Small $\sigma$ increases height of bellcurve
 		&& For non-gaussian features, do something like $x_1 \leftarrow log(x_1)$
 		&& Can also create your own features; $x_3 = \frac {x_1}{x_2}$
+		&& Choose $\epsilon$ by maximizing $F_1$
 		& Multivariate Gaussian will automatically capture correlations between features
 		&& Is more computationally expensive bc $\Sigma^{-1}$
 		&& Should have $m > 10n$ to verify invertibility 
+		& For recommender systems, mean normalization can help recommend items for new users
 	\end{easylist}
 
-\subsection{Gaussion (Normal) Distribution}
+\subsection{Gaussion (Normal) Distribution Equations}
 	\begin{equation*}
 		p(x) = \prod_{j=1}^n p(x_j; \mu_j; \sigma_j^2) = \prod_{j=1}^n \frac {1}{\sqrt{2\pi}\sigma} \text{exp}\left(-\frac{(x-\mu)^2}{2 \sigma^2}\right)
 	\end{equation*}
@@ -726,7 +728,7 @@
 		\item Compute $p(x)$; anomaly if $p(x) < \epsilon$
 	\end{enumerate}
 
-\subsection{Multivariate Gaussion Distribution}
+\subsection{Multivariate Gaussion Distribution Equations}
 	\begin{equation*}
 		p(x; \mu; \Sigma) = \frac{1} {(2\pi)^{\frac{n}{2}} \abs{\Sigma}^\frac{1}{2}} \text{exp} \left(-\frac{1}{2}(x-\mu)^\intercal \Sigma^{-1} (x-\mu) \right)
 	\end{equation*}
@@ -759,6 +761,31 @@
 	\begin{equation*}
 			\theta_k^{(j)} = \theta_k^{(j)} - \alpha \left(\sum_{i:r(i,j)==1} \left( (\theta^{(j)})^\intercal x^{(i)} - y^{(i,j)} \right)x_k^{(i)} + \lambda \theta_k^{(j)} \right)
 	\end{equation*}
+
+\subsection{Collaborative Filtering Equations}
+	\begin{equation*}
+		J(x^{(1)}, ..., x^{(n_m)}, \theta^{(1)}, ..., \theta^{(n_u)}) = \frac {1}{2} \sum_{(i,j):r(i,j)==1} ((\theta^{(j)})^\intercal x^{(i)} - y^{(i,j)})^2 + \frac {\lambda}{2} \sum_{i=1}^{n_m} \sum_{k=1}^n (x_k^{(i)})^2 + \frac {\lambda}{2} \sum_{j=1}^{n_u} \sum_{k=1}^n (\theta_k^{(j)})^2
+	\end{equation*}
+	\begin{equation*}
+		x_k^{(i)} = x_k^{(i)} - \alpha \left(\sum_{i:r(i,j)==1} \left( (\theta^{(j)})^\intercal x^{(i)} - y^{(i,j)} \right)\theta_k^{(j)} + \lambda x_k^{(i)} \right) \text{ i=1, ..., $n_m$}
+	\end{equation*}
+	\begin{equation*}
+		\theta_k^{(j)} = \theta_k^{(j)} - \alpha \left(\sum_{i:r(i,j)==1} \left( (\theta^{(j)})^\intercal x^{(i)} - y^{(i,j)} \right)x_k^{(i)} + \lambda \theta_k^{(j)} \right) \text{ j=1, ..., $n_u$}
+	\end{equation*}
+
+
+\subsection{Collaborative Filtering Algorithm}
+	\begin{enumerate}
+		\item Initialize $x^{(1)}, ..., x^{(n_m)}, \theta^{(1)}, ..., \theta^{(n_u)}$ to small random values
+		\item Minimize $J(x^{(1)}, ..., x^{(n_m)}, \theta^{(1)}, ..., \theta^{(n_u)})$
+		\item Predict rating using $\theta^\intercal x$
+	\end{enumerate}
+
+
+
+
+
+
 
 
 

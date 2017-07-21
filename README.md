@@ -1,3 +1,3 @@
 # Coursera-Stanford-ML
 
-For notes, view ./Notes/Coursera-Stanford-ML-Notes.pdf
+For notes, view ./Coursera-Stanford-ML-Notes.pdf

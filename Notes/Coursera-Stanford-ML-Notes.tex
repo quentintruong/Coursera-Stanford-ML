@@ -14,9 +14,10 @@
 \usepackage{mathtools} 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert} % for abs val
 
+
 \title{Coursera-Stanford-ML-Notes}
-\author{Quentin Truong}
-\date{20 June 2017 - ? July 2017}
+\author{Quentin Truong\\Taught by Prof Andrew Ng}
+\date{20 June 2017 - 21 July 2017}
 
 
 \begin{document}
@@ -773,17 +774,69 @@
 		\theta_k^{(j)} = \theta_k^{(j)} - \alpha \left(\sum_{i:r(i,j)==1} \left( (\theta^{(j)})^\intercal x^{(i)} - y^{(i,j)} \right)x_k^{(i)} + \lambda \theta_k^{(j)} \right) \text{ j=1, ..., $n_u$}
 	\end{equation*}
 
-
 \subsection{Collaborative Filtering Algorithm}
 	\begin{enumerate}
 		\item Initialize $x^{(1)}, ..., x^{(n_m)}, \theta^{(1)}, ..., \theta^{(n_u)}$ to small random values
 		\item Minimize $J(x^{(1)}, ..., x^{(n_m)}, \theta^{(1)}, ..., \theta^{(n_u)})$
 		\item Predict rating using $\theta^\intercal x$
 	\end{enumerate}
+\clearpage
 
 
 
+%======================================================
+%========================WEEK 10========================
+%======================================================
+\section{Week 10: Large Scale ML}
+\subsection{Overview}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Gradient Descent with large datasets
+		&& Stochastic: $1$ example per iteration
+		&& Batch: $m$ examples per iteration
+		&& Mini-Batch: $b$ examples per iteration; $b \approx 10$
+		&& Repeat through set of training examples multiple times if needed
+		& Online learning
+		&& Unlimited data because continuous stream, so throw away examples after you use them
+		&& Can adapt to changing user tastes
+		& Map-reduce
+		&& Parallelize by splitting data computation up over multiple computers and recombining later
+	\end{easylist}
+\clearpage
 
+
+
+%======================================================
+%========================WEEK 11========================
+%======================================================
+\section{Week 11: Photo OCR}
+\subsection{Overview}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Problem Description and Pipeline
+		&& Text Detection, Character Segmentation, Character Classification
+		& Obtaining lots of data
+		&& Artificial Data Synthesis
+		&&& Create more data by distorting/modifying current data
+		&& Get more data by labeling it yourself
+		&& Crowdsource data
+		&&& Amazon Mechanical Turks
+		& Ceiling Analysis
+		&& Don't trust gut feeling, give ground truth to pipeline and spend developer time on areas with greatest potential for improvement
+	\end{easylist}
+
+\subsection{Summary}
+	\begin{easylist} 
+	\ListProperties(Hide=100, Hang=true, Progressive=4ex, Style*=--\ , Style2*=$\bullet\ $)
+		& Supervised Learning
+		&& Linear regression, logistic regression, neural networks, SVMs
+		& Unsupervised Learning
+		&& K-means, PCA, Anomaly detection
+		& Special Applications / Special topics
+		&& Recommender systems, large scale machine learning
+		& Advice on building a machine learning system
+		&& Bias/variance, regularization; deciding what to wrok on next; evaluation of learning algorithms, learning curves, error analysis, ceiling analysis
+	\end{easylist}
 
 
 
